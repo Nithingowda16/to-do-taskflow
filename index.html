@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TaskFlow - A modern, responsive, and intuitive interactive To-Do List application. Organize your day, one task at a time.">
+  <title>TaskFlow - Organize Your Day</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="logo-badge">
+        <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+          <path d="m9 12 2 2 4-4"></path>
+        </svg>
+        <span class="app-tag">Productivity</span>
+      </div>
+      <h1 class="app-title">TaskFlow</h1>
+      <p class="app-subtitle">Organize your day, one task at a time.</p>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      <!-- Task Input Form -->
+      <section class="task-input-section" aria-labelledby="add-task-heading">
+        <h2 id="add-task-heading" class="sr-only">Add a New Task</h2>
+        <form id="task-form" class="task-form" novalidate>
+          <div class="input-group">
+            <label for="task-input" class="sr-only">Enter task description</label>
+            <input 
+              type="text" 
+              id="task-input" 
+              class="task-input" 
+              placeholder="What needs to be done today?" 
+              autocomplete="off"
+              maxlength="200"
+              aria-describedby="input-error-msg"
+            >
+            <button type="submit" id="add-task-btn" class="btn btn-primary">
+              <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>Add Task</span>
+            </button>
+          </div>
+          <div id="input-error-msg" class="input-error" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <!-- Task Statistics Dashboard -->
+      <section class="stats-section" aria-labelledby="stats-heading">
+        <h2 id="stats-heading" class="sr-only">Task Statistics</h2>
+        <div class="stats-grid">
+          <div class="stat-card stat-total">
+            <div class="stat-icon-wrapper">
+              <svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Total Tasks</span>
+              <span id="total-count" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card stat-pending">
+            <div class="stat-icon-wrapper">
+              <svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Pending</span>
+              <span id="pending-count" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card stat-completed">
+            <div class="stat-icon-wrapper">
+              <svg class="stat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Completed</span>
+              <span id="completed-count" class="stat-value">0</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Task Controls (Filters & Actions) -->
+      <section class="controls-section">
+        <div class="filter-tabs" role="tablist" aria-label="Task filters">
+          <button type="button" class="filter-btn active" data-filter="all" role="tab" aria-selected="true" id="filter-tab-all">All</button>
+          <button type="button" class="filter-btn" data-filter="pending" role="tab" aria-selected="false" id="filter-tab-pending">Pending</button>
+          <button type="button" class="filter-btn" data-filter="completed" role="tab" aria-selected="false" id="filter-tab-completed">Completed</button>
+        </div>
+
+        <div class="extra-actions">
+          <button type="button" id="clear-completed-btn" class="btn btn-text" title="Clear all completed tasks">
+            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            <span>Clear Completed</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Task List Container -->
+      <section class="task-list-section" aria-labelledby="task-list-heading">
+        <h2 id="task-list-heading" class="sr-only">Task List</h2>
+        
+        <ul id="task-list" class="task-list" role="list" aria-live="polite">
+          <!-- Dynamic task items populated by JavaScript -->
+        </ul>
+
+        <!-- Empty State Container -->
+        <div id="empty-state" class="empty-state" aria-live="polite">
+          <div class="empty-illustration">
+            <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+          </div>
+          <h3 id="empty-state-title" class="empty-title">No tasks yet. Add your first task!</h3>
+          <p id="empty-state-subtitle" class="empty-subtitle">Keep track of your goals and stay organized every day.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 TaskFlow. Crafted with HTML5, CSS3 &amp; Vanilla JavaScript.</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript Module -->
+  <script src="js/script.js"></script>
+</body>
+</html>
